@@ -1,0 +1,30 @@
+{% extends "coltrane/base.html" %}
+
+{% block title %}{{ block.super }} | Latest Entries{% endblock %}
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+		<h1>Blog</h1>
+<a href="/admin/coltrane/entry/add/">Add New Job</a>
+		{% for entry in latest %}
+			<h2>{{ entry.title }}</h2>
+			<p>Published on {{ entry.pub_date|date:"F j, Y" }}</p>
+			{% if entry.excerpt_html %}
+				{{ entry.excerpt_html|safe}}
+			{% else %}
+				{{ entry.body_html|truncatewords_html:"50"|safe}}
+			{% endif %}
+{% comment %}
+			<p><a href="{{ entry.get_absolute_url }}">Read full entry</a></p>
+{% endcomment %}
+		{% endfor %}
+		
+	{% else %}
+		<a href="/auth/login/?next=/weblog/">Login</a>
+	{% endif %}
+{% endblock %}
+
+{% block whatis %}
+<p>This is a list of the latest {{ latest.count }} entries published in the blog.</p>
+{% endblock %}

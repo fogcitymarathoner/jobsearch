@@ -1,0 +1,22 @@
+Django==1.4.2
+Markdown==2.4
+Pillow==2.4.0
+South==0.8.4
+akismet==0.2.0
+django-extensions==1.3.6
+django-markup==0.4
+django-model-utils==2.0.3
+django-nose==1.2
+django-photologue==2.8
+django-sortedm2m==0.7.0
+-e git+https://github.com/alex/django-taggit.git@9b85eab6cddb05a7750132fb06aa7ef5f2e08851#egg=django_taggit
+-e git+https://github.com/shacker/django-todo.git@f150256c36724ca835e609427678bf5f658b8675#egg=django_todo
+markup==0.2
+nose==1.3.3
+psycopg2==2.5.2
+python-dateutil==2.2
+six==1.6.1
+threadedcomments==0.5
+uWSGI==2.0.4
+vobject==0.8.1c
+wsgiref==0.1.2

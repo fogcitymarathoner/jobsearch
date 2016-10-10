@@ -1,0 +1,14 @@
+.checked{
+    position: relative;
+    background-color: #FF0000;
+    height: 100px;
+    width: 100px;
+    z-index: 0;
+}
+.original{
+    position: relative;
+    background-color: #0000FF;
+    height: 100px;
+    width: 100px;
+    z-index: 0;
+}

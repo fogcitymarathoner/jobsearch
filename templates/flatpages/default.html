@@ -1,0 +1,29 @@
+{% extends "ss_djsct/base_site.html" %}
+
+{% block title %}{{ block.super }} | {{ flatpage.title }}{% endblock %}
+
+{% block sidebar %}
+    	{% if user.is_authenticated %}
+
+		<ul class="jd_menu_vertical jd_menu_slate">
+			<li><a href="/home/">Home</a></li>
+			<li><a href="/radiant/">Radiant Page</a></li>
+			<li><a href="/radiant/links/">Links</a></li>
+		</ul>
+
+		{% endif %}
+
+{% endblock %}
+{% block content %}
+
+	{% if user.is_authenticated %}
+		<h1>{{flatpage.title}}</h1>
+		{{flatpage.content}}		
+	{% else %}
+
+<a href="/auth/login/?next=/weblog/">
+    <img src="{{ static_url }}img/cashfinger-big.jpg"/>
+</a>
+	{% endif %}
+{% endblock %}
+

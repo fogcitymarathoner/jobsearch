@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Jobsearch {% block title %}{% endblock %}</title>
+	
+<!-- calendar support !-->
+	        <!--[if IE]><style>
+            div {
+                zoom: 1; /* trigger hasLayout */
+            }
+        </style><![endif]-->
+        {% if LANGUAGE_BIDI %}
+        <style type="text/css" media="screen">
+            div.right_panel {
+                float: left; /* hotfix for sidebar */
+            }
+        </style>
+        {% endif %}
+        {% block extrahead %}
+        {% endblock %}
+        {% block extra_head %}
+        {% endblock %}
+<!-- end calendar support !-->
+		<script src="{{ static_url }}jdmenu/jquery-1.1.2.js" type="text/javascript"></script>
+		<script src="{{ static_url }}jdmenu/jquery.bgiframe.js" type="text/javascript"></script>
+		<script src="{{ static_url }}jdmenu/jquery.dimensions.js" type="text/javascript"></script>
+		<script src="{{ static_url }}jdmenu/jquery.jdMenu.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			// Initialization, you can leave this here or move this somewhere else
+			$(function(){
+				$('ul.jd_menu').jdMenu({	onShow: loadMenu
+											//onHideCheck: onHideCheckMenu,
+											//onHide: onHideMenu, 
+											//onClick: onClickMenu, 
+											//onAnimate: onAnimate
+											});
+				$('ul.jd_menu_vertical').jdMenu({onShow: loadMenu, onHide: unloadMenu, offset: 1, onAnimate: onAnimate});
+			});
+
+			function onAnimate(show) {
+				//$(this).fadeIn('slow').show();
+				if (show) {
+					$(this)
+						.css('visibility', 'hidden').show()
+							.css('width', $(this).innerWidth())
+						.hide().css('visibility', 'visible')
+					.fadeIn('normal');
+				} else {
+					$(this).fadeOut('fast');
+				}
+			}
+
+			var MENU_COUNTER = 1;
+			function loadMenu() {
+				if (this.id == 'dynamicMenu') {
+					$('> ul > li', this).remove();
+			
+					var ul = $('<ul></ul>');
+					var t = MENU_COUNTER + 10;
+					for (; MENU_COUNTER < t; MENU_COUNTER++) {
+						$('> ul', this).append('<li>Item ' + MENU_COUNTER + '</li>');
+					}
+				}
+			}
+
+			function unloadMenu() {
+				if (MENU_COUNTER >= 30) {
+					MENU_COUNTER = 1;
+				}
+			}
+
+			// We're passed a UL
+			function onHideCheckMenu() {
+				return !$(this).parent().is('.LOCKED');
+			}
+
+			// We're passed a LI
+			function onClickMenu() {
+				$(this).toggleClass('LOCKED');
+				return true;
+			}
+		</script>
+		<link rel="stylesheet" href="{{ static_url }}jdmenu/jdMenu.css" type="text/css" />
+		<link rel="stylesheet" href="{{ static_url }}jdmenu/jdMenu.slate.css" type="text/css" />
+		<style type="text/css">
+			body {
+				margin: 0px;
+				margin-left: 15px;
+     				padding: 0px 20px;
+				font-family: sans-serif;
+
+      				font-size: 12px;
+				font-family : Arial, Verdana, SunSans-Regular,sans-serif;
+				background-color: #a8a1d7;
+    				color:#564b47;
+
+			}
+			h1 {
+				font-family: sans-serif;
+				color: #0068B8;
+			}
+			
+    a {
+        color: blue;
+        text-decoration: none;
+	}
+			li.LOCKED {
+				font-weight: bold;
+			}
+		</style>
+    <style type="text/css">
+        #header {
+            width: 800px;
+            margin: 0 20px 1em 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        #content {
+            width: 575px;
+            margin: 0 20px;
+            float: left;
+        }
+        #sidebar {
+            width: 205px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body class="{% block bodyclass %}{% endblock %}">   
+    <div id="header">
+    	{% if user.is_authenticated %}
+	<h1>Jobsearch Blog</h1>
+	<ul class="jd_menu jd_menu_slate">
+		<li>Links
+		<ul>
+			<li><a href="http://fogtest.com/" target="_blank">Fogtest</a></li>
+			<li><a href="https://sfgeek.org/cakepersonal/posts/"target="_blank" >Cake Personal</a></li>
+			<li><a href="https://sfgeek.org/cakemcbiz/" target="_blank">Personal Business</a></li>
+			<li><a href="https://sfgeek.org/cakerrg/" target="_blank">Cake RRG</a></li>
+			<li><a href="http://songs.fogtest.com/songs/search" target="_blank">ROR Songs</a></li>
+		</ul>
+		</li>
+		<li><a href="/home/" >Home</a></li>
+		<li><a href="/todo/" >ToDo</a></li>
+		<li><a href="/weblog/" >Blog</a></li>
+		<li><a href="/admin/" >Admin</a></li>
+		<li><a href="/auth/logout/" >Logout</a></li>
+	</ul>
+
+		{% endif %}
+    </div>
+ 
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+
+        <div id="body">
+			    {% block body %}
+	            {% endblock %}
+        </div>
+
+
+    </div>
+    
+    <div id="sidebar">   	
+        {% block sidebar %}
+		{% endblock %}
+    </div>
+    
+</body>
+</html>
